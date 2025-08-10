@@ -32,6 +32,11 @@ export OPENAI_API_KEY="your-key-here"
 
 To use your own LLM or different providers, check out the [PocketFlow LLM documentation](https://the-pocket.github.io/PocketFlow/utility_function/llm.html) and modify `utils/call_llm.py` accordingly.
 
+**Test your LLM setup:**
+```bash
+python utils/call_llm.py
+```
+
 ### Running the Tool
 
 ```bash
