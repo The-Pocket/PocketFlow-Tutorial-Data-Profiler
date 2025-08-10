@@ -1,15 +1,29 @@
-from openai import OpenAI
+from google import genai
 import os
 
-# Learn more about calling the LLM: https://the-pocket.github.io/PocketFlow/utility_function/llm.html
-def call_llm(prompt):    
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "your-api-key"))
-    r = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return r.choices[0].message.content
+def call_llm(prompt: str) -> str:
+    """
+    Call Google Gemini LLM with the given prompt.
     
+    Args:
+        prompt (str): The prompt to send to the LLM
+        
+    Returns:
+        str: The response from the LLM
+    """
+    api_key = os.getenv("GEMINI_API_KEY", "Your API Key")
+    client = genai.Client(api_key=api_key)
+    model = os.getenv("GEMINI_MODEL", "gemini-2.5-pro")
+    
+    response = client.models.generate_content(
+        model=model, 
+        contents=[prompt]
+    )
+    return response.text
+
 if __name__ == "__main__":
-    prompt = "What is the meaning of life?"
-    print(call_llm(prompt))
+    test_prompt = "Hello, how are you?"
+    
+    print("Making call...")
+    response = call_llm(test_prompt)
+    print(f"Response: {response}")
